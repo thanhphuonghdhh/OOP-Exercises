@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -10,7 +11,7 @@ public class Student {
     private double score;
     List<Result> results;
 
-    public Student() {}
+    public Student() { results = new ArrayList<>();}
     public Student(String id, String name, LocalDate birthDay, int enrolledYear, double score, List<Result> results) {
         this.id = id;
         this.name = name;
@@ -77,6 +78,10 @@ public class Student {
         this.results = results;
     }
 
+    public boolean isRegular() {
+        if (this instanceof RegularStudent) return true;
+        return false;
+    }
     //6
     public double getAvgScoreBySemester(int sem) {
         for (int i=0;i<results.size();i++) {

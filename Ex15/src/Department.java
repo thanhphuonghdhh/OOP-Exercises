@@ -5,18 +5,45 @@ import java.util.List;
 public class Department {
     private String name;
     List<Student> students;
+    private int countRegular;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
+
+    public int getCountRegular() {
+        return countRegular;
+    }
+
+    public void setCountRegular(int countRegular) {
+        this.countRegular = countRegular;
+    }
 
     public Department() {
-
+        students = new ArrayList<>();
     }
 
     public Department(String name, List<Student> students) {
         this.name = name;
         this.students = students;
+        countRegular = 0;
     }
 
     public void add(Student student) {
         students.add(student);
+        if (student instanceof RegularStudent) countRegular++;
     }
 
     //8
@@ -68,6 +95,7 @@ public class Department {
 
     }
 
+    //12
     public List<Student> sortByYear() {
         List<Student> list = students;
         Collections.sort(list, ((o1, o2) -> {
@@ -76,6 +104,7 @@ public class Department {
         return list;
     }
 
+    //13
     public int getStudentNumberByYear(int year) {
         int number = 0;
         for (int i=0;i<students.size();i++) {

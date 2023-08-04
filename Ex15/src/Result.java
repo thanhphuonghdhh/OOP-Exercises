@@ -22,4 +22,12 @@ public class Result {
     public void setAvgScore(double avgScore) {
         this.avgScore = avgScore;
     }
+
+    @Override
+    public String toString() {
+        return "Result{" +
+                "semester=" + semester +
+                ", avgScore=" + avgScore +
+                '}';
+    }
 }
