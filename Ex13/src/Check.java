@@ -15,6 +15,16 @@ public class Check {
 
     }
 
+
+    public static void isDate(String s) throws DateTimeException {
+        try {
+            LocalDate.parse(s);
+        }
+        catch (DateTimeException e) {
+            throw new DateTimeException("Ngay sinh khong hop le");
+        }
+
+    }
     public static void phoneCheck(String phone) throws PhoneException{
         //if (phone.length() != 10) throw new PhoneException("Do dai khong hop le");
         for (int i=0;i<phone.length();i++) {

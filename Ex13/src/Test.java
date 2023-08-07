@@ -1,6 +1,7 @@
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -17,35 +18,92 @@ public class Test {
             System.out.println("2: Update Employee");
             System.out.println("3: Delete Employee");
             System.out.println("4: Find Employee");
-            int n = scanner.nextInt();
-            scanner.nextLine();
-            if (n == 1) {
+            String n = scanner.nextLine();
+
+            if (n.equals("1")) {
                 System.out.println("0: Insert Experience");
                 System.out.println("1: Insert Fresher");
                 System.out.println("2: Insert Intern");
-                int m = scanner.nextInt();
-                scanner.nextLine();
-                if (m == 0) {
+                String m = scanner.nextLine();
+                if (m.equals("0")) {
+                    String id, fullName, birthDay, phone, email, skill;
+                    int year;
+                    boolean kt = true;
                     System.out.println("id");
-                    String id = scanner.nextLine();
+                    id = scanner.nextLine();
+                    while (kt) {
+                        if (!employeeManager.checkExist(id)) {
+                            kt = false;
+                        } else  {
+                            System.out.println("Enter ID again");
+                            id=scanner.nextLine();
+                            kt=true;
+                        }
+                    }
+                    kt = true;
                     System.out.println("fullName");
-                    String fullName = scanner.nextLine();
+                    fullName = scanner.nextLine();
+                    while (kt) {
+                        try {
+                            Check.fullNameCheck(fullName);
+                            kt = false;
+                        } catch (FullNameException e) {
+                            System.out.println(e + ". " + "Enter fullName again");
+                            fullName=scanner.nextLine();
+                            kt=true;
+                        }
+                    }
+                    kt = true;
                     System.out.println("birthDay");
-                    String birthDay = scanner.nextLine();
+                    birthDay = scanner.nextLine();
+                    while (kt) {
+                        try {
+                            Check.birthdayCheck(birthDay);
+                            kt = false;
+                        } catch (BirthDayException e) {
+                            System.out.println(e + ". " + "Enter birth day again");
+                            birthDay=scanner.nextLine();
+                            kt=true;
+                        }
+                    }
+                    kt=true;
                     System.out.println("phone");
-                    String phone = scanner.nextLine();
+                    phone = scanner.nextLine();
+                    while (kt) {
+                        try {
+                            Check.phoneCheck(phone);
+                            kt = false;
+                        } catch (PhoneException e) {
+                            System.out.println(e + ". " + "Enter phone number again");
+                            phone=scanner.nextLine();
+                            kt=true;
+                        }
+                    }
+                    kt=true;
                     System.out.println("email");
-                    String email = scanner.nextLine();
+                    email = scanner.nextLine();
+                    while (kt) {
+                        try {
+                            Check.emailCheck(email);
+                            kt = false;
+                        } catch (EmailException e) {
+                            System.out.println(e + ". " + "Enter email again");
+                            email=scanner.nextLine();
+                            kt=true;
+                        }
+                    }
+                    kt=true;
                     System.out.println("year");
-                    int year = scanner.nextInt();
+                    year = scanner.nextInt();
                     scanner.nextLine();
                     System.out.println("skill");
-                    String skill = scanner.nextLine();
+                    skill = scanner.nextLine();
                     System.out.println("Number of certificate");
                     List<Certificate> cerList = new ArrayList<>();
                     int number = scanner.nextInt();
                     scanner.nextLine();
                     for (int i = 1; i <= number; i++) {
+                        String dateCer;
                         System.out.println("Certificate" + i);
                         System.out.println("ID");
                         String idCer = scanner.nextLine();
@@ -54,53 +112,117 @@ public class Test {
                         System.out.println("Rank");
                         String rankCer = scanner.nextLine();
                         System.out.println("Date");
-                        String dateCer = scanner.nextLine();
+                        dateCer = scanner.nextLine();
+                        while (kt) {
+                            try {
+                                Check.isDate(dateCer);
+                                kt = false;
+                            } catch (DateTimeException e) {
+                                System.out.println(e + ". " + "Enter date again");
+                                dateCer=scanner.nextLine();
+                                kt=true;
+                            }
+                        }
+                        kt=true;
                         cerList.add(new Certificate(idCer,nameCer,rankCer,LocalDate.parse(dateCer)));
                     }
-                    try {
-                        Check.fullNameCheck(fullName);
-                        Check.emailCheck(email);
-                        Check.phoneCheck(phone);
-                        Check.birthdayCheck(birthDay);
+
+
                         Employee experience = new Experience(id, fullName, LocalDate.parse(birthDay), phone, email, cerList, year, skill);
                         employeeManager.insert(experience);
                         Employee.setCount(Employee.getCount()+1);
                         experience.showInfo();
-                    }
-                    catch (BirthDayException e){
-                        System.err.println(e);
-                    }
-                    catch (PhoneException e) {
-                        System.err.println(e);
-                    }
-                    catch (FullNameException e) {
-                        System.err.println(e);
-                    }
-                    catch (EmailException e) {
-                        System.err.println(e);
-                    }
-                } else if (m == 1) {
+
+                } else if (m.equals("1")) {
+                    String id,fullName,birthDay,phone,email,date,rank,uniName;
+                    boolean kt = true;
                     System.out.println("id");
-                    String id = scanner.nextLine();
+                    id = scanner.nextLine();
+                    while (kt) {
+                        if (!employeeManager.checkExist(id)) {
+                            kt = false;
+                        } else  {
+                            System.out.println("Enter ID again");
+                            id=scanner.nextLine();
+                            kt=true;
+                        }
+                    }
+                    kt = true;
                     System.out.println("fullName");
-                    String fullName = scanner.nextLine();
+                    fullName = scanner.nextLine();
+                    while (kt) {
+                        try {
+                            Check.fullNameCheck(fullName);
+                            kt = false;
+                        } catch (FullNameException e) {
+                            System.out.println(e + ". " + "Enter name again");
+                            fullName=scanner.nextLine();
+                            kt=true;
+                        }
+                    }
+                    kt=true;
                     System.out.println("birthDay");
-                    String birthDay = scanner.nextLine();
+                    birthDay = scanner.nextLine();
+                    while (kt) {
+                        try {
+                            Check.birthdayCheck(birthDay);
+                            kt = false;
+                        } catch (BirthDayException e) {
+                            System.out.println(e + ". " + "Enter birthday again");
+                            birthDay=scanner.nextLine();
+                            kt=true;
+                        }
+                    }
+                    kt=true;
                     System.out.println("phone");
-                    String phone = scanner.nextLine();
+                    phone = scanner.nextLine();
+                    while (kt) {
+                        try {
+                            Check.phoneCheck(phone);
+                            kt = false;
+                        } catch (PhoneException e) {
+                            System.out.println(e + ". " + "Enter phone number again");
+                            phone=scanner.nextLine();
+                            kt=true;
+                        }
+                    }
+                    kt=true;
                     System.out.println("email");
-                    String email = scanner.nextLine();
+                    email = scanner.nextLine();
+                    while (kt) {
+                        try {
+                            Check.emailCheck(email);
+                            kt = false;
+                        } catch (EmailException e) {
+                            System.out.println(e + ". " + "Enter email again");
+                            email=scanner.nextLine();
+                            kt=true;
+                        }
+                    }
+                    kt=true;
                     System.out.println("graduation date");
-                    String date = scanner.nextLine();
+                    date = scanner.nextLine();
+                    while (kt) {
+                        try {
+                            Check.isDate(date);
+                            kt = false;
+                        } catch (DateTimeException e) {
+                            System.out.println(e + ". " + "Enter date again");
+                            date=scanner.nextLine();
+                            kt=true;
+                        }
+                    }
+                    kt=true;
                     System.out.println("rank");
-                    String rank = scanner.nextLine();
+                    rank = scanner.nextLine();
                     System.out.println("name of university");
-                    String uniName = scanner.nextLine();
+                    uniName = scanner.nextLine();
                     System.out.println("Number of certificate");
                     List<Certificate> cerList = new ArrayList<>();
                     int number = scanner.nextInt();
                     scanner.nextLine();
                     for (int i = 1; i <= number; i++) {
+                        String dateCer;
                         System.out.println("Certificate" + i);
                         System.out.println("ID");
                         String idCer = scanner.nextLine();
@@ -109,54 +231,105 @@ public class Test {
                         System.out.println("Rank");
                         String rankCer = scanner.nextLine();
                         System.out.println("Date");
-                        String dateCer = scanner.nextLine();
+                        dateCer = scanner.nextLine();
+                        while (kt) {
+                            try {
+                                Check.isDate(dateCer);
+                                kt = false;
+                            } catch (DateTimeException e) {
+                                System.out.println(e + ". " + "Enter date again");
+                                dateCer=scanner.nextLine();
+                                kt=true;
+                            }
+                        }
+                        kt=true;
                         cerList.add(new Certificate(idCer,nameCer,rankCer,LocalDate.parse(dateCer)));
                     }
-                    try {
-                        Check.fullNameCheck(fullName);
-                        Check.emailCheck(email);
-                        Check.phoneCheck(phone);
-                        Check.birthdayCheck(birthDay);
                         Employee fresher = new Fresher(id, fullName, LocalDate.parse(birthDay), phone, email, cerList, LocalDate.parse(date), rank,uniName);
                         employeeManager.insert(fresher);
                         Employee.setCount(Employee.getCount()+1);
                         fresher.showInfo();
-                    }
-                    catch (BirthDayException e){
-                        System.err.println(e);
-                    }
-                    catch (PhoneException e) {
-                        System.err.println(e);
-                    }
-                    catch (FullNameException e) {
-                        System.err.println(e);
-                    }
-                    catch (EmailException e) {
-                        System.err.println(e);
-                    }
-                } else if (m == 2) {
+                } else if (m.equals("2")) {
+                    String id,fullName,birthDay,phone,email,major,uniName;
+                    int semester;
+                    boolean kt=true;
                     System.out.println("id");
-                    String id = scanner.nextLine();
+                    id = scanner.nextLine();
+                    while (kt) {
+                        if (!employeeManager.checkExist(id)) {
+                            kt = false;
+                        } else  {
+                            System.out.println("Enter ID again");
+                            id=scanner.nextLine();
+                            kt=true;
+                        }
+                    }
+                    kt = true;
                     System.out.println("fullName");
-                    String fullName = scanner.nextLine();
+                    fullName = scanner.nextLine();
+                    while (kt) {
+                        try {
+                            Check.fullNameCheck(fullName);
+                            kt = false;
+                        } catch (FullNameException e) {
+                            System.out.println(e + ". " + "Enter name again");
+                            fullName=scanner.nextLine();
+                            kt=true;
+                        }
+                    }
+                    kt=true;
                     System.out.println("birthDay");
-                    String birthDay = scanner.nextLine();
+                    birthDay = scanner.nextLine();
+                    while (kt) {
+                        try {
+                            Check.birthdayCheck(birthDay);
+                            kt = false;
+                        } catch (BirthDayException e) {
+                            System.out.println(e + ". " + "Enter birthday again");
+                            birthDay=scanner.nextLine();
+                            kt=true;
+                        }
+                    }
+                    kt=true;
                     System.out.println("phone");
-                    String phone = scanner.nextLine();
+                    phone = scanner.nextLine();
+                    while (kt) {
+                        try {
+                            Check.phoneCheck(phone);
+                            kt = false;
+                        } catch (PhoneException e) {
+                            System.out.println(e + ". " + "Enter phone number again");
+                            phone=scanner.nextLine();
+                            kt=true;
+                        }
+                    }
+                    kt=true;
                     System.out.println("email");
-                    String email = scanner.nextLine();
+                    email = scanner.nextLine();
+                    while (kt) {
+                        try {
+                            Check.emailCheck(email);
+                            kt = false;
+                        } catch (EmailException e) {
+                            System.out.println(e + ". " + "Enter email again");
+                            email=scanner.nextLine();
+                            kt=true;
+                        }
+                    }
+                    kt=true;
                     System.out.println("major");
-                    String major = scanner.nextLine();
+                    major = scanner.nextLine();
                     System.out.println("semester");
-                    int semester = scanner.nextInt();
+                    semester = scanner.nextInt();
                     scanner.nextLine();
                     System.out.println("name of university");
-                    String uniName = scanner.nextLine();
+                    uniName = scanner.nextLine();
                     System.out.println("Number of certificate");
                     List<Certificate> cerList = new ArrayList<>();
                     int number = scanner.nextInt();
                     scanner.nextLine();
                     for (int i = 1; i <= number; i++) {
+                        String dateCer;
                         System.out.println("Certificate" + i);
                         System.out.println("ID");
                         String idCer = scanner.nextLine();
@@ -165,34 +338,28 @@ public class Test {
                         System.out.println("Rank");
                         String rankCer = scanner.nextLine();
                         System.out.println("Date");
-                        String dateCer = scanner.nextLine();
+                        dateCer = scanner.nextLine();
+                        while (kt) {
+                            try {
+                                Check.isDate(dateCer);
+                                kt = false;
+                            } catch (DateTimeException e) {
+                                System.out.println(e + ". " + "Enter date again");
+                                dateCer=scanner.nextLine();
+                                kt=true;
+                            }
+                        }
+                        kt=true;
                         cerList.add(new Certificate(idCer,nameCer,rankCer,LocalDate.parse(dateCer)));
                     }
-                    try {
-                        Check.fullNameCheck(fullName);
-                        Check.emailCheck(email);
-                        Check.phoneCheck(phone);
-                        Check.birthdayCheck(birthDay);
+
                         Employee intern = new Intern(id, fullName, LocalDate.parse(birthDay), phone, email, cerList, major, semester,uniName);
                         employeeManager.insert(intern);
                         Employee.setCount(Employee.getCount()+1);
                         intern.showInfo();
-                    }
-                    catch (BirthDayException e){
-                        System.err.println(e);
-                    }
-                    catch (PhoneException e) {
-                        System.err.println(e);
-                    }
-                    catch (FullNameException e) {
-                        System.err.println(e);
-                    }
-                    catch (EmailException e) {
-                        System.err.println(e);
-                    }
                 }
                 System.out.println(Employee.getCount());
-            } else if (n == 2) {
+            } else if (n.equals("2")) {
                 System.out.println("ID");
                 String id = scanner.nextLine();
                 Employee e = employeeManager.findByID(id);
@@ -209,12 +376,12 @@ public class Test {
                 System.out.println("email");
                 String email = scanner.nextLine();
                 e.setEmail(email);
-            } else if (n == 3) {
+            } else if (n.equals("3")) {
                 System.out.println("ID");
                 String id = scanner.nextLine();
                 if (employeeManager.findByID(id)!=null) Employee.setCount(Employee.getCount()-1);
                 employeeManager.deleteByID(id);
-            } else if (n == 4) {
+            } else if (n.equals("4")) {
                 System.out.println("0: Experience");
                 System.out.println("1: Fresher");
                 System.out.println("2: Intern");
@@ -223,12 +390,9 @@ public class Test {
                 scanner.nextLine();
                 if (!(m==0||m==1||m==2)) continue;
                 employeeManager.findByType(m).forEach(s -> s.showInfo());
-                FileWriter fileWriter = new FileWriter("src/Employee.txt",true);
-                BufferedWriter b1 = new BufferedWriter(fileWriter);
                 employeeManager.findByType(m).forEach(s -> {
                     try {
-                        b1.write(s.getInfo()+'\'');
-                        b1.flush();
+                        EmployeeManager.printFile(s.getInfo());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

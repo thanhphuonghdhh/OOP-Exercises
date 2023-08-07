@@ -1,3 +1,6 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,9 +12,15 @@ public class EmployeeManager {
     }
 
     public void insert(Employee employee) {
+        boolean isExist = employees.stream().anyMatch(s -> s.getId().equals(employee.getId()));
+        if (isExist) System.out.println("cannot insert employee with same id");
         employees.add(employee);
+
     }
 
+    public boolean checkExist(String id) {
+        return employees.stream().anyMatch(s -> s.getId().equals(id));
+    }
     public Employee findByID(String id) {
         for (int i = 0; i < employees.size(); i++) {
             if (employees.get(i).getId().equals(id))
@@ -30,18 +39,32 @@ public class EmployeeManager {
 
     public List<Employee> findByType(int type) {
         List<Employee> list = new ArrayList<>();
-        if (type == 0) {
-            for (int i = 0; i < employees.size(); i++)
-                if (employees.get(i) instanceof Experience) list.add(employees.get(i));
-        }
-        else if (type == 1) {
-            for (int i = 0; i < employees.size(); i++)
-                if (employees.get(i) instanceof Fresher) list.add(employees.get(i));
-        }
-        else if (type == 2) {
-            for (int i = 0; i < employees.size(); i++)
-                if (employees.get(i) instanceof Intern) list.add(employees.get(i));
+        switch (type) {
+            case 0: {
+                for (int i = 0; i < employees.size(); i++)
+                    if (employees.get(i) instanceof Experience) list.add(employees.get(i));
+                break;
+            }
+            case 1: {
+                for (int i = 0; i < employees.size(); i++)
+                    if (employees.get(i) instanceof Fresher) list.add(employees.get(i));
+                break;
+            }
+            case 2: {
+                for (int i = 0; i < employees.size(); i++)
+                    if (employees.get(i) instanceof Intern) list.add(employees.get(i));
+                break;
+            }
         }
         return list;
+    }
+
+    public static void printFile(String s) throws IOException {
+        FileWriter fileWriter = new FileWriter("src/Employee.txt",true);
+        BufferedWriter b1 = new BufferedWriter(fileWriter);
+        b1.write(s+String.format("%n"));
+        b1.flush();
+
+
     }
 }
